@@ -3,7 +3,7 @@ import random
 import math
 from pyrogram.types import CallbackQuery, InputMediaPhoto, InputMediaVideo, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import filters
-from pyrogram.errors import WebpageMediaEmpty # IMPORT ERROR HANDLER
+from pyrogram.errors import WebpageMediaEmpty
 
 from PritiMusic import YouTube, app
 from PritiMusic.core.call import Lucky
@@ -105,16 +105,15 @@ async def support_page_cb(client, CallbackQuery, _):
         reply_markup=InlineKeyboardMarkup(custom_support_buttons)
     )
 
-# --- SOURCE PAGE (FILE ID FIXED & SPOILER ADDED) ---
+# --- SOURCE PAGE (UPDATED TO PHOTO) ---
 @app.on_callback_query(filters.regex("gib_source"))
 async def gib_repo_callback(_, callback_query):
     try:
-        # SHIV BHAI: Jab aapko bot se NAYA ID mil jaye toh isme paste kar dena!
-        video_file_id = "BAACAgUAAxkBAAFLNGlqHVDs2RCymDci6kFRHvk-sqomEAACBSIAAi898VQgOqB3PTfx_DsE"
+        image_url = "https://files.catbox.moe/10zwqs.jpg"
         
         await callback_query.edit_message_media(
-            media=InputMediaVideo(
-                media=video_file_id, 
+            media=InputMediaPhoto(
+                media=image_url, 
                 caption="REPO = ||ᴘʜᴇʟᴀ ᴅᴇᴠɪʟ ᴋᴏ ᴘᴀᴘᴀ ʙᴏʟ ᴄʜᴀʟ ʙᴏʟ😎||"
             ),
             reply_markup=InlineKeyboardMarkup(
@@ -126,8 +125,6 @@ async def gib_repo_callback(_, callback_query):
                 ]
             ),
         )
-    except WebpageMediaEmpty:
-        await callback_query.answer("Media load nahi hua. Kripya URL ki jagah File ID use karein.", show_alert=True)
     except Exception as e:
         await callback_query.answer(f"Error: {str(e)}", show_alert=True)
 
@@ -191,7 +188,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             except:
                 pass
             command = counter
-            mention = "ᴜᴘᴠᴏ তাড়s"
+            mention = "ᴜᴘᴠᴏᴛᴇs"
         else:
             if CallbackQuery.from_user.id in upvoters[chat_id][CallbackQuery.message.id]:
                 await CallbackQuery.answer(_["admin_38"], show_alert=True)
@@ -308,10 +305,10 @@ async def markup_timer():
                 except: continue
             except: continue
 
-asyncio.create_task(markup_timer())
+asyncio.create_task(markup_timer()) 
 
 # --- YAHAN SE FILE ID NIKALNE WALA CODE START HOTA HAI ---
 @app.on_message(filters.video & filters.private)
 async def get_my_own_file_id(client, message):
     await message.reply_text(f"**Mera Video File ID (Isko Copy Karo):**\n`{message.video.file_id}`")
-# --- YAHAN KHATAM ---
+# --- YAHAN KHATAM --
